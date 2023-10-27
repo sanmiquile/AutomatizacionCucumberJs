@@ -29,7 +29,7 @@ class SignInPage extends BasePage {
     }
 
     async getSignInMessage() {
-        await this.getEwait().until(() => this.driver.findElement(this.message).isDisplayed());
+        await this.wait().until(() => this.driver.findElement(this.message).isDisplayed());
         return await this.getText(this.message);
     }
 }

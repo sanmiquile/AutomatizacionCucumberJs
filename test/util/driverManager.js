@@ -1,29 +1,31 @@
-const {Builder} = require("selenium-webdriver");
+const {Builder, WebDriver, Capabilities} = require("selenium-webdriver");
 
 class DriverManager {
-
     constructor() {
+        console.log("CONSTRUYENDO DRIVER MANAGER")
         if (DriverManager.instance) {
             return DriverManager.instance;
         }
         this.driver = null;
         DriverManager.instance = this;
     }
-
     getDriver() {
         return this.driver;
     }
-
     setDriver(driver) {
         this.driver = driver;
     }
-
     setup(){
-        this.driver = new Builder().forBrowser('chrome').build();
+      //  if (this.driver ==null){
+        const capabilities = Capabilities.chrome();
+        capabilities.set('chromeOptions', { "w3c": false , "pageLoadStrategy":"normal"});
+        capabilities.set('pageLoadStrategy','normal');
+        capabilities.setPageLoadStrategy('normal');
+        this.driver = new Builder().forBrowser('chrome').withCapabilities(capabilities ).build();
+      //  }
     }
-
-    quit(){
-        this.driver.quit();
+    async quit(){
+        await this.driver.quit();
     }
 
 }

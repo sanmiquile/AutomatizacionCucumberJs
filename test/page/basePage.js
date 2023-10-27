@@ -6,7 +6,7 @@ class BasePage {
     constructor() {
         this.driver = DriverManager.driver;
         //this.ewait = new (require('selenium-webdriver')).WebDriverWait(this.driver, 5000);
-        this.driver.manage().setTimeouts({ implicit: 5000 });
+        this.driver.manage().setTimeouts({ implicit: 10000 });
     }
 
     findElement(locator) {

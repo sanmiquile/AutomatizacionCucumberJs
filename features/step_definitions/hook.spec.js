@@ -1,28 +1,30 @@
-const { Before, After } = require("@cucumber/cucumber");
-const { browser } = require("protractor");
+const {Before, After, BeforeStep} = require("@cucumber/cucumber");
+const {browser} = require("protractor");
 const DriverManager = require("../../test/util/driverManager")
 
-class Hook {
-    constructor() {
-        if (Hook.instance) {
-            return Hook.instance;
-        }
-            Hook.instance = this;
-        Before( this.setUpDriver );
-        After( this.tearDown )
-    }
+Before(async function () {
+    // Configuración y carga del navegador
+    console.log("INGRESO A BEFORE");
+    DriverManager.setup();
+    await DriverManager.driver.get("http://localhost:8080/");
+    //await DriverManager.driver.get("http://189.50.209.188");
+});
 
-    async setUpDriver() {
-        // Configuración y carga del navegador
-        DriverManager.setup();
-        //wait DriverManager.driver.get("http://localhost:8080/");
-        await DriverManager.driver.get("http://189.50.209.188");
-    }
-
-    async tearDown() {
+After(async function () {
         // Finalización del navegador
-        await DriverManager.driver.quit();
-    }
-}
+    console.log("INGRESO A AFTER");
+    await DriverManager.quit();
+});
 
-module.exports = new Hook();
+BeforeStep(async function (){
+    const screenshot = await DriverManager.driver.takeScreenshot()
+    this.attach((screenshot), {
+        mediaType: 'base64:image/png'
+    })
+});
+/*module.exports = {
+    getDriver : () => DriverManager.driver,
+};*/
+
+
+

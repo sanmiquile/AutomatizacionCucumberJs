@@ -10,8 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cucumber/cucumber": "^10.0.1",
+    "@faker-js/faker": "^8.2.0",
+    "gulp": "^4.0.2",
     "protractor": "^7.0.0",
     "selenium-webdriver": "^4.14.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.1",
+    "cucumber-html-reporter": "^7.1.1"
   }
 }

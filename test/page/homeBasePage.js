@@ -25,22 +25,22 @@ class HomeBasePage extends BasePage {
         return By.id("tituloApp");
     }
 
-        isHomePageDisplayed() {
+    async isHomePageDisplayed() {
         const locators = [this.goOutLocator, this.menuLocator, this.devolverLocator, this.adelantarLocator];
         return locators.some(locator => this.isDisplayed(locator));
     }
 
     async getTitleApp() {
         // Esperar a que el elemento sea visible
-        await this.getEwait().until(until.elementIsVisible(this.driver.findElement(this.titleAppLocator)));
+        await this.driver.wait(until.elementIsVisible(this.driver.findElement(this.titleAppLocator)));
         // Obtener el texto del elemento
         return await this.getText(this.titleAppLocator);
     }
 
-    goStep(title) {
+    async goStep(title) {
         const newStep = `//span[@class='ui-steps-title' and text()='${title}']`;
         console.log(newStep);
-        this.click(By.xpath(newStep));
+        await this.click(By.xpath(newStep));
     }
 }
 
